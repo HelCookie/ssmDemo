@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.shop.pojo.User">
+    <id column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from users
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.User">
+    insert into users (userid, username, password, 
+      phone, address)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.User">
+    update users
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select userid, username, password, phone, address
+    from users
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select userid, username, password, phone, address
+    from users
+  </select>
+  
+  
+  <select id="querypasswordbyname" resultType="String">
+  select password
+    from users
+    where username=#{name}
+  </select>
+  
+  <insert id="saveuser" parameterType="user">
+  insert into users values(null,#{username},#{password},#{phone},#{address})
+  </insert>
+  
+
+  <select id="queryuserbyname" resultType="user">
+  select * from users where username=#{name}
+  </select>
+  
+  <!-- int updateuser(User user); -->
+  
+  <update id="updateuser" parameterType="user">
+   update users 
+   set 
+      username = #{username},
+      password = #{password},
+      phone = #{phone},
+      address = #{address}
+      where userid = #{userid}  
+  </update>
+  
+</mapper>

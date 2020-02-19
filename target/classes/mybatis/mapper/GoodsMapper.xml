@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.shop.pojo.Goods">
+    <id column="gid" jdbcType="INTEGER" property="gid" />
+    <result column="gname" jdbcType="VARCHAR" property="gname" />
+    <result column="des" jdbcType="VARCHAR" property="des" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shopping.goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shop.pojo.Goods">
+    insert into shopping.goods (gname, des, 
+      price, stock, img)
+    values ( #{gname,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
+      #{price,jdbcType=INTEGER}, #{stock,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.shop.pojo.Goods">
+    update shopping.goods
+     set 
+      gname = #{gname},
+      des = #{des},
+      price =#{price},
+      stock = #{stock}  
+    where gid = #{gid}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select gid, gname, des, price, stock, img
+    from shopping.goods
+    where id = #{gid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select gid, gname, des, price, stock, img
+    from goods
+  </select>
+  
+  
+  <select id="selectgoodsbyid" parameterType="int" resultType="com.shop.pojo.Goods">
+     select * from goods where gid=#{gid}
+  </select>
+  
+  
+<select id="querygoodsbyname" parameterType="String" resultType="com.shop.pojo.Goods">
+select * from goods where gname like '%${gname}%'
+</select>
+  
+  
+  <update id="updatestockbyid" parameterType="int">
+  update goods
+  set stock=#{stock}
+  where gid=#{gid}
+  </update>
+ 
+  <select id="queryallgoods" resultType="com.shop.pojo.Goods">
+   select * from shopping.goods 
+  </select>
+  
+  
+</mapper>
